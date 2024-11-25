@@ -5,11 +5,8 @@ import sys
 import math , time
 import os
 
-# Inicializar Pygame e o mixer para tocar música
 pygame.init()
 pygame.mixer.init()
-
-# Caminho para o arquivo de música
 music_path = os.path.join("soundtrack", "background.mp3")
 pygame.mixer.music.load(music_path)
 pygame.mixer.music.play(-1) 
@@ -44,7 +41,6 @@ def print_board(board):
     print(np.flip(board, 0))
 
 def winning_move(board, piece):
-    # Check horizontal locations for win
     for c in range(COLUMN_COUNT - 3):
         for r in range(ROW_COUNT):
             if (board[r][c] == piece and
@@ -53,7 +49,6 @@ def winning_move(board, piece):
                 board[r][c + 3] == piece):
                 return [(r, c), (r, c + 1), (r, c + 2), (r, c + 3)]
     
-    # Check vertical locations for win
     for c in range(COLUMN_COUNT):
         for r in range(ROW_COUNT - 3):
             if (board[r][c] == piece and
@@ -62,7 +57,6 @@ def winning_move(board, piece):
                 board[r + 3][c] == piece):
                 return [(r, c), (r + 1, c), (r + 2, c), (r + 3, c)]
     
-    # Check positively sloped diagonals
     for c in range(COLUMN_COUNT - 3):
         for r in range(ROW_COUNT - 3):
             if (board[r][c] == piece and
@@ -71,7 +65,6 @@ def winning_move(board, piece):
                 board[r + 3][c + 3] == piece):
                 return [(r, c), (r + 1, c + 1), (r + 2, c + 2), (r + 3, c + 3)]
     
-    # Check negatively sloped diagonals
     for c in range(COLUMN_COUNT - 3):
         for r in range(3, ROW_COUNT):
             if (board[r][c] == piece and
@@ -80,7 +73,7 @@ def winning_move(board, piece):
                 board[r - 3][c + 3] == piece):
                 return [(r, c), (r - 1, c + 1), (r - 2, c + 2), (r - 3, c + 3)]
 
-    return None  # No win
+    return None  
 
 def draw_board(board):
     for c in range(COLUMN_COUNT):
@@ -130,20 +123,17 @@ while not game_over:
                 if turn == 0:
                     drop_piece(board, row, col, 1)
 
-                    # Check for Player 1 win
                     if winning_move(board, 1):
                         small_font = pygame.font.SysFont("monospace", 50)
                         label = small_font.render("Jogador 1 ganhou!", 1, RED)
                         
-                        winning_coords = winning_move(board, 1)  # Get the winning coordinates
-                        # Draw a line connecting the winning pieces
+                        winning_coords = winning_move(board, 1) 
                         draw_board(board)
-
                         pygame.draw.line(
                             screen, BLACK,
                             (winning_coords[0][1] * SQUARESIZE + SQUARESIZE // 2, height - (winning_coords[0][0] * SQUARESIZE + SQUARESIZE // 2)),
                             (winning_coords[-1][1] * SQUARESIZE + SQUARESIZE // 2, height - (winning_coords[-1][0] * SQUARESIZE + SQUARESIZE // 2)),
-                            10  # Line thickness
+                            10  
                         )
                         screen.blit(label, (40, 10))
                         pygame.display.update()
@@ -163,11 +153,9 @@ while not game_over:
                                 ]  
                         color_index = 0
                         game_over = True
-                        start_time = time.time()  # Marque o tempo de início
+                        start_time = time.time()  
                         
-                        # Loop de piscagem com duração de 5 segundos
                         while game_over and time.time() - start_time < 5:
-                            # Alterne a cor das peças vencedoras
                             for coord in winning_coords:
                                 row, col = coord
                                 pygame.draw.circle(
@@ -177,12 +165,8 @@ while not game_over:
                                 )
                             
                             pygame.display.update()
-                            pygame.time.delay(500)  # Controle a velocidade da piscagem
-
-                            # Alterne para a próxima cor
+                            pygame.time.delay(500)  
                             color_index = (color_index + 1) % len(colors)
-                            
-                            # Verifique eventos para permitir sair do loop, como o fechamento da janela
                             for event in pygame.event.get():
                                 if event.type == pygame.QUIT:
                                     game_over = False
@@ -191,18 +175,17 @@ while not game_over:
                 else:
                     drop_piece(board, row, col, 2)
 
-                    # Check for Player 2 win
                     if winning_move(board, 2):
                         small_font = pygame.font.SysFont("monospace", 50)
                         label = small_font.render("Jogador 2 ganhou!", 1, YELLOW)
-                        winning_coords = winning_move(board, 2)  # Get the winning coordinates
+                        winning_coords = winning_move(board, 2)  
                         draw_board(board)
 
                         pygame.draw.line(
                             screen, BLACK,
                             (winning_coords[0][1] * SQUARESIZE + SQUARESIZE // 2, height - (winning_coords[0][0] * SQUARESIZE + SQUARESIZE // 2)),
                             (winning_coords[-1][1] * SQUARESIZE + SQUARESIZE // 2, height - (winning_coords[-1][0] * SQUARESIZE + SQUARESIZE // 2)),
-                            10  # Line thickness
+                            10 
                         )
                         screen.blit(label, (40, 10))
                         pygame.display.update()
@@ -223,11 +206,10 @@ while not game_over:
                                 ]  
                         color_index = 0
                         
-                        start_time = time.time()  # Marque o tempo de início
+                        start_time = time.time() 
                         
-                        # Loop de piscagem com duração de 5 segundos
+                    
                         while game_over and time.time() - start_time < 5:
-                            # Alterne a cor das peças vencedoras
                             for coord in winning_coords:
                                 row, col = coord
                                 pygame.draw.circle(
@@ -237,12 +219,10 @@ while not game_over:
                                 )
                             
                             pygame.display.update()
-                            pygame.time.delay(500)  # Controle a velocidade da piscagem
+                            pygame.time.delay(500)  
 
-                            # Alterne para a próxima cor
                             color_index = (color_index + 1) % len(colors)
                             
-                            # Verifique eventos para permitir sair do loop, como o fechamento da janela
                             for event in pygame.event.get():
                                 if event.type == pygame.QUIT:
                                     game_over = False
@@ -252,31 +232,26 @@ while not game_over:
     
                 print_board(board)
                 draw_board(board)
-
-                # Switch turns
                 turn += 1
                 turn = turn % 2
 
     if game_over:
-        # ask for replay
         pygame.time.wait(3000)
         screen.fill(BLACK)
         pygame.display.update()
-        #display replay message in the middle of the screen
+    
         
-      # Smaller font for replay message
-        small_font = pygame.font.SysFont("monospace", 40)  # Adjust size here
+        small_font = pygame.font.SysFont("monospace", 40) 
         replay_message = small_font.render("Jogar denovo? (s/n)", True, BLUE)
 
-        # Calculate position to center the message
         replay_x = (width - replay_message.get_width()) // 2
-        replay_y = height // 2  # Adjust the vertical position if needed
+        replay_y = height // 2  
         screen.blit(replay_message, (replay_x, replay_y))
         pygame.display.update()
         
         
         replay = None
-        while replay is None:  # Change condition to None
+        while replay is None: 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -288,13 +263,13 @@ while not game_over:
                         replay = False
                     else:
                         replay = False
-        if replay:  # Restart the game
+        if replay:  
             board = create_board()
             print_board(board)
             draw_board(board)
             game_over = False
             turn = 0
-        else:  # Exit the game
+        else:  
             pygame.quit()
             sys.exit()
             
