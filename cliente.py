@@ -9,24 +9,21 @@ def main():
         print("Conectado ao servidor!")
         
         while True:
-            mensagem = cliente.recv(1024).decode()  # Recebe mensagem do servidor
-            print(mensagem)  # Exibe a mensagem para o jogador
+            mensagem = cliente.recv(1024).decode() 
+            print(mensagem)  
             
             if "Deseja jogar novamente?" in mensagem:
-                # Pergunta se deseja jogar novamente
                 resposta = input("Digite 's' para sim ou 'n' para não: ").strip().lower()
                 while resposta not in ['s', 'n']:
                     resposta = input("Resposta inválida. Digite 's' para sim ou 'n' para não: ").strip().lower()
                 cliente.send(resposta.encode())  # Envia a resposta ao servidor
-                if resposta == 'n':  # Se o jogador quiser sair, fecha o cliente
+                if resposta == 'n':  
                     print("Você escolheu não jogar novamente. Encerrando...")
                     break
             elif "Obrigado por jogar!" in mensagem:
-                # Finaliza o cliente se o jogo for encerrado
                 print("O jogo foi encerrado pelo servidor.")
                 break
             elif "Escolha uma coluna" in mensagem:
-                # Quando for a vez do jogador, pede entrada
                 coluna = input("Digite a coluna onde deseja jogar (0-6): ").strip()
                 while not coluna.isdigit() or int(coluna) < 0 or int(coluna) > 6:
                     coluna = input("Entrada inválida. Digite um número entre 0 e 6: ").strip()
