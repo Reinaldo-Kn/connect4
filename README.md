@@ -1,4 +1,4 @@
-# Connect4 - Jogo Multiplayer em Python
+# Connect4 
 
 ## Descrição
 Connect4 é um jogo multiplayer baseado no clássico jogo de tabuleiro. Ele permite que dois jogadores joguem remotamente conectados ao mesmo servidor através do terminal.
