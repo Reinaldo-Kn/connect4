@@ -83,3 +83,7 @@ Cada cliente representará um jogador. Assim que ambos se conectarem, o jogo com
    - O ciclo se repete até que pelo menos um jogador escolha não continuar, encerrando a sessão.
 
 ![Fluxo de mensagens](assets/connect4.drawio.png)   
+
+   - Ao acabar o jogo, os jogadores podem decidir se querem jogar novamente.
+   - Caso um jogador decida não jogar novamente, a comunicação é encerrada e o servidor é encerrado.
+   - Caso ambos os jogadores decidam jogar novamente, o jogo é reiniciado, voltando para a etapa "Vez do Jogador 1" e continua o fluxo de mensagens.

@@ -7,9 +7,8 @@ import os
 
 pygame.init()
 pygame.mixer.init()
-music_path = os.path.join("soundtrack", "background.mp3")
-pygame.mixer.music.load(music_path)
-pygame.mixer.music.play(-1) 
+
+
 ROW_COUNT = 6
 COLUMN_COUNT = 7
 SQUARESIZE = 100
